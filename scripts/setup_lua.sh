@@ -50,7 +50,7 @@ if [[ ! -d $T_BD/$LUASRC_BASE ]]; then
   # Build Lua without backwards compatibility for testing
   if [[ ! -f $HOME/.lua/lua ]]; then
     perl -i -pe 's/-DLUA_COMPAT_(ALL|5_2)//' src/Makefile
-    make $PLATFORM && make INSTALL_TOP="$LUA_HOME_DIR" install;
+    make $PLATFORM MYCFLAGS=-fPIC && make INSTALL_TOP="$LUA_HOME_DIR" install;
     rm -f $HOME/.lua/lua
     ln -sf $LUA_HOME_DIR/bin/lua $HOME/.lua/lua
     rm -f $HOME/.lua/luac
@@ -87,10 +87,29 @@ echo "Checking lua interpreter version"
 lua -v
 echo "Checking lua rocks version"
 luarocks --version
-echo "Installing required rocks for testing"
-luarocks --local install Lua-cURL --server=https://luarocks.org/dev
-#luarocks --local show Lua-cURL
-luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
-#luarocks --local show luacov-coveralls
-luarocks --local install lunitx
-#luarocks --local show lunitx
+echo "Installing rock: Lua-cURL"
+luarocks --local show Lua-cURL > /dev/null 2>&1
+if [[ $? -ne 0 ]];then
+  luarocks --local install Lua-cURL --server=https://luarocks.org/dev
+else
+  echo "Installed"
+fi
+echo "Installing rock: luacov-coveralls"
+luarocks --local show luacov-coveralls > /dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+  luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
+else
+  echo "Installed"
+fi
+luarocks --local show lunitx > /dev/null 2>&1
+echo "Installing rock: lunitx"
+if [[ $? -ne 0 ]];then
+  luarocks --local install lunitx
+else
+  echo "Installed"
+fi
+echo "Dependencies are now installed"
+echo "Lua installation directory: $PROJECT_HOME/build/install/lua"
+ls -l $PROJECT_HOME/build/install/lua
+echo "Lua rocks installation directory: $PROJECT_HOME/build/install/luarocks"
+ls -l $PROJECT_HOME/build/install/luarocks

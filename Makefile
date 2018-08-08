@@ -6,8 +6,6 @@ SYS=$(if $(filter Linux%,$(UNAME)),linux,\
 	$(if $(filter Darwin%,$(UNAME)),macosx,\
 	undefined\
 )))
-mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
-current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 ifdef MINGW_PREFIX
 	MINGW=1
