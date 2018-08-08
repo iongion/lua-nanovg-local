@@ -12,8 +12,8 @@ esac
 
 if [[ "${machine}" == "Linux" ]]; then
     sudo apt-get update
-    sudo apt-get uprade -y
-    sudo apt-get install -y libglfw3-dev
+    sudo apt-get upgrade -y
+    sudo apt-get install -y libglfw3-dev libosmesa6-dev libgles2-mesa-dev libgles2-mesa-dev libgles2-mesa-dev mesa-utils mesa-utils-extra
 fi
 
 # Homebrew
