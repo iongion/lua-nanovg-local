@@ -11,7 +11,7 @@ if [[ ! -z $MINGW_PREFIX ]]; then
 fi
 cd $PROJECT_HOME
 echo "Listing project files"
-ls -l $PROJECT_HOME
+ls -l $PROJECT_HOME/build
 echo "Build project PROJECT_HOME=$PROJECT_HOME"
 CI=true PROJECT_HOME=$PROJECT_HOME make
 # resolving build tools
