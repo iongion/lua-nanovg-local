@@ -15,6 +15,7 @@ before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
 script:
+  - sudo apt-get update && sudo apt-get uprade -y
   - bash ./scripts/setup_env.sh
   - bash ./scripts/setup_dep.sh
   - bash ./scripts/run-tests.sh
