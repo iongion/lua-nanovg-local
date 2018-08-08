@@ -11,6 +11,8 @@ case "${unameOut}" in
 esac
 
 if [[ "${machine}" == "Linux" ]]; then
+    sudo apt-get update
+    sudo apt-get uprade -y
     sudo apt-get install -y libglfw3-dev
 fi
 
