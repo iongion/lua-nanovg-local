@@ -10,8 +10,10 @@ if [[ ! -z $MINGW_PREFIX ]]; then
     L_EXT=dll
 fi
 cd $PROJECT_HOME
-echo "Build project"
-CI=true PROJECT_HOME=$PROJECT_HOME make -f Makefile
+echo "Listing project files"
+ls -l $PROJECT_HOME
+echo "Build project PROJECT_HOME=$PROJECT_HOME"
+CI=true PROJECT_HOME=$PROJECT_HOME make
 # resolving build tools
 NVG_MAIN=$PROJECT_HOME/nvg.$L_EXT
 echo "Checking if $NVG_MAIN exists"
