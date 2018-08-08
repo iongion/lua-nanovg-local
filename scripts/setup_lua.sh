@@ -84,7 +84,7 @@ echo "Checking lua rocks version"
 luarocks --version
 echo "Installing rock: Lua-cURL"
 luarocks --local show Lua-cURL > /dev/null 2>&1
-if [[ $? -ne 0 ]];then
+if [[ $? -ne 0 ]]; then
   luarocks --local install Lua-cURL --server=https://luarocks.org/dev
 else
   echo "Installed"

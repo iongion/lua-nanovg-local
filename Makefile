@@ -24,25 +24,25 @@ endif
 # CI
 ifdef CI
 	PREFIX?=$(PROJECT_HOME)/build/install/lua-nanovg
-	INCDIR?=-I$(PROJECT_HOME)/build/install/lua/include
+	INCDIR?=-I$(PROJECT_HOME)/build/install/lua/include -Iglfw/include
 	LDFLAGS?=-L$(PROJECT_HOME)/build/install/lua/lib -llua
 else
 	# Linux
 	ifdef LINUX
 		PREFIX?=/usr/local
-		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER))
+		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER)) -Iglfw/include
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 	# Windows - Mingw/Msys
 	ifdef MINGW
 		PREFIX?=$(MINGW_PREFIX)
-		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER))
+		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER)) -Iglfw/include
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 	# OSX - Homebrew
 	ifdef OSX
 		PREFIX?=/usr/local
-		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER))
+		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER)) -Iglfw/include
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 endif
@@ -90,7 +90,7 @@ test :
 	lua$(LUAVER) examples/test.lua
 
 mingw : OS := MINGW
-mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -Iglfw/include -fPIC
+mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -fPIC
 mingw : LDFLAGS += -lm -lopengl32 -lgdi32
 mingw :
 	# NanoVG
@@ -99,7 +99,7 @@ mingw :
 	gcc -shared -O3 $(CFLAGS) $(INCDIR) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
 
 linux : OS := LINUX
-linux : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_X11 -D_GLFW_BUILD_ALL -Iglfw/include -fPIC
+linux : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_X11 -D_GLFW_BUILD_ALL -fPIC
 linux :
 	# NanoVG
 	gcc -c -O3 $(CFLAGS) $(INCDIR) nanovg/src/nanovg.c
@@ -107,7 +107,7 @@ linux :
 	gcc -shared -O3 $(CFLAGS) $(INCDIR) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
 
 macosx : OS := MACOSX
-macosx : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_COCOA -D_GLFW_BUILD_ALL -D_GLFW_NSGL -Iglfw/include
+macosx : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_COCOA -D_GLFW_BUILD_ALL -D_GLFW_NSGL
 macosx :
 	# NanoVG
 	gcc -c -O3 $(CFLAGS) $(INCDIR) nanovg/src/nanovg.c
