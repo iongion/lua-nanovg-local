@@ -1,7 +1,5 @@
 language: c
-
 sudo: false
-
 env:
   global:
     - LUAROCKS=3.0.0
@@ -9,14 +7,11 @@ env:
 branches:
   only:
     - master
-
 script:
   - bash ./scripts/run-tests.sh
-
 after_success:
   - coveralls -b .. -r .. -i ./src --dump c.report.json
   - luacov-coveralls -j c.report.json -v
-
 notifications:
   email:
     on_success: change

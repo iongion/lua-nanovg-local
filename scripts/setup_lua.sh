@@ -23,8 +23,9 @@ if [[ ! -d $T_BD ]];then
   echo "Cannot ensure build directory"
   exit 1
 fi
-echo "Ensuring lua local packages dir in $HOME/.lua"
+echo "Ensuring lua local packages dir in $HOME/.lua and $HOME/.luarocks"
 mkdir -p $HOME/.lua
+mkdir -p $HOME/.luarocks
 echo "Ensuring lua local home dir in $LUA_HOME_DIR"
 mkdir -p "$LUA_HOME_DIR"
 # Lua 5.x
