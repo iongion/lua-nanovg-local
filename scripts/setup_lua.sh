@@ -29,7 +29,7 @@ mkdir -p $HOME/.lua
 echo "Ensuring lua local home dir in $LUA_HOME_DIR"
 mkdir -p "$LUA_HOME_DIR"
 # Lua 5.x
-LUASRC_BASE=5.0.0
+LUASRC_BASE=5.3.5
 if [ "$L_LU" == "5.1" ]; then
   LUASRC_BASE=5.1.5
 elif [ "$L_LU" == "5.2" ]; then
