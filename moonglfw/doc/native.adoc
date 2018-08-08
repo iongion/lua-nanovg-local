@@ -1,0 +1,38 @@
+
+=== Native access
+
+[small]#Rfr: link:http://www.glfw.org/docs/latest/group__native.html[Native access].#
+
+* _string_ = *get_win32_adapter*(_monitor_) +
+_string_ = *_get_win32_monitor*(_monitor_) +
+_lightuserdata_ = *get_win32_window*(_window_)
+
+* _lightuserdata_ = *get_wgl_context*(_window_)
+
+* _lightuserdata_ = *get_x11_display*( ) +
+_integer_ = *get_x11_adapter*(_monitor_) +
+_integer_ = *get_x11_monitor*(_monitor_) +
+_integer_ = *get_x11_window*(_window_)
+
+* _lightuserdata_ = *get_glx_context*(_window_) +
+_integer_ = *get_glx_window*(_window_)
+
+* _lightuserdata_ = *get_wayland_display*( ) +
+_lightuserdata_ = *get_wayland_monitor*(_monitor_) +
+_lightuserdata_ = *get_wayland_window*(_window_)
+
+* _lightuserdata_ = *get_mir_display*( ) +
+_integer_ = *get_mir_monitor*(_monitor_) +
+_lightuserdata_ = *get_mir_window*(_window_)
+
+* _lightuserdata_ = *get_egl_display*( ) +
+_lightuserdata_ = *get_egl_context*(_window_) +
+_lightuserdata_ = *get_egl_surface*(_window_)
+
+* _context_, _system_ = *get_context*(_window_) _NONGLFW_ +
+[small]#Returns the GL context (lightuserdata) associated with _window_, followed by
+a string denoting the system ('_wgl_', '_glx_', or '_egl_'). +
+Returns _nil_ if the GL context can not be retrieved. +
+(This function can be used instead of _get_xxx_context(&nbsp;)_ when _xxx_ is unknown).#
+
+

@@ -1,0 +1,132 @@
+
+=== Window handling
+
+[small]#Rfr: link:http://www.glfw.org/docs/latest/group__window.html[Window handling].#
+
+[[default_window_hints]]
+* *default_window_hints*( )
+
+[[window_hint]]
+* *window_hint*(<<enums_window_hint, _target_>>, _hint_)
+
+[[version_hint]]
+* *version_hint*(_major_, _minor_, _profile_) _NONGLFW_ +
+[small]#Combined <<window_hint, window_hint>> for the following targets: '_context version major_', 
+'_context version minor_', and '_opengl version_'.#
+
+[[create_window]]
+* _window_ = *create_window*(_width_, _height_, [_title_], [_monitor_], [_sharewindow_]) +
+[small]#Returns a _window_ handle to the newly created window.#
+
+[[destroy_window]]
+* *destroy_window*(_window_)
+
+[[focus_window]]
+* *focus_window*(_window_)
+
+[[window_should_close]]
+* *set_window_should_close*(_window_, _boolean_) +
+_boolean_ = *window_should_close*(_window_)
+
+[[set_window_title]]
+* *set_window_title*(_window_, _title_)
+
+[[set_window_icon]]
+* *set_window_icon*(_window_, _width_, _height_, _pixels_, [_width~2~_, _height~2~_, _pixels~2~_, _..._]) +
+[small]#_width_, _height_ (integers), and _pixels_ (binary string) specify the image. +
+Other images (up to 32 total) can be added in the optional part in the same way.#
+
+[[set_window_monitor]]
+* *set_window_monitor*(_window_, [_monitor_], _xpos_, _ypos_, _width_, _height_, [_refresh_rate_])
+
+[[get_window_pos]]
+* *set_window_pos*(_window_, _xpos_, _ypos_) +
+_xpos_, _ypos_ = *get_window_pos*(_window_)
+
+[[get_window_size]]
+* *set_window_size*(_window_, _width_, _height_) +
+_width_, _height_ = *get_window_size*(_window_)
+
+[[set_window_aspect_ratio]]
+* *set_window_aspect_ratio*(_window_, _numer_, _denom_) +
+[small]#A _nil_ value for _numer_ or _denom_ means "_don\'t care_".#
+
+[[set_window_size_limits]]
+* *set_window_size_limits*(_window_, _minwidth_, _minheight_, _maxwidth_, _maxheight_) +
+[small]#A _nil_ value for _minwidth_, _minheight_, _maxwidth_, or _maxheight_ means "_don\'t care_".#
+
+[[get_framebuffer_size]]
+* _width_, _height_ = *get_framebuffer_size*(_window_)
+
+
+[[get_window_frame_size]]
+* _left_, _top_, _right_, _bottom_ = *get_window_frame_size*(_window_)
+
+
+
+[[iconify_window]]
+* *iconify_window*(_window_) +
+*restore_window*(_window_)
+*maximize_window*(_window_)
+
+[[show_window]]
+* *show_window*(_window_) +
+*hide_window*(_window_)
+
+[[get_window_monitor]]
+* _monitor_ = *get_window_monitor*(_window_)
+
+
+[[get_window_attribute]]
+* _value_ = *get_window_attribute*(_window_, _attrib_) +
+[small]#_attrib_, _value_: see _target_ and _hint_ for the <<window_hint, window_hint>>( ) function.#
+
+[[poll_events]]
+* *poll_events*( )
+
+[[wait_events]]
+* *wait_events*( )
+
+[[wait_events_timeout]]
+* *wait_events_timeout*(_seconds_)
+
+[[post_empty_event]]
+* *post_empty_event*( )
+
+[[swap_buffers]]
+* *swap_buffers*(_window_)
+
+==== Window callbacks
+
+[small]#Rfr: link:http://www.glfw.org/docs/latest/group__window.html[Window handling].#
+
+All the following functions, when invoked with _func_ = _nil_, unregister the corresponding current callback.
+
+[[set_window_pos_callback]]
+* *set_window_pos_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window, xpos, ypos)_*.#
+
+[[set_window_size_callback]]
+* *set_window_size_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window, width, height)_*.#
+
+[[set_window_close_callback]]
+* *set_window_close_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window)_*.#
+
+[[set_window_refresh_callback]]
+* *set_window_refresh_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window)_*.#
+
+[[set_window_focus_callback]]
+* *set_window_focus_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window, focused)_*, where _focused_ is a boolean.#
+
+[[set_window_iconify_callback]]
+* *set_window_iconify_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window, iconified)_*, where _iconified_ is a boolean.#
+
+[[set_framebuffer_size_callback]]
+* *set_framebuffer_size_callback*(_window_, [_func_]) +
+[small]#The _func_ callback is executed as *_func(window, width, height)_*.#
+

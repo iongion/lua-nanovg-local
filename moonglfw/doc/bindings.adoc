@@ -1,0 +1,24 @@
+
+== Bindings
+
+The structure of this section purposedly replicates the structure of the 
+http://www.glfw.org/docs/latest/modules.html[GLFW Reference documentation].
+
+All the functions listed in the following sections are members of the *glfw* table.
+
+Functions tagged with _NONGLFW_ are MoonGLFW additions that do not map directly to GLFW functions.
+
+include::context.adoc[]
+
+include::initialization.adoc[]
+
+include::input.adoc[]
+
+include::monitor.adoc[]
+
+include::native.adoc[]
+
+include::window.adoc[]
+
+include::vulkan.adoc[]
+
