@@ -1,4 +1,6 @@
 language: c
+os:
+  - linux
 sudo: true
 git:
   submodules: true
@@ -23,3 +25,8 @@ notifications:
   email:
     on_success: change
     on_failure: always
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      sudo: required

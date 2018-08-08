@@ -11,7 +11,6 @@ case "${unameOut}" in
 esac
 
 if [[ "${machine}" == "Linux" ]]; then
-    apt-cache search glfw
     sudo apt-get install -y libglfw3-dev
 fi
 
