@@ -78,14 +78,17 @@ cd $T_BD
 # Lua deps
 PATH=$HOME/.lua/bin:$HOME/.luarocks/bin:$PATH
 echo "Path altered - checking lua and luarocks PATH=$PATH"
-which lua
-which luarocks
+ls -l $HOME/.lua
+ls -l $HOME/.luarocks
 lua -v
 luarocks --version
-echo "Path altered - installing required packages for testing"
-luarocks install --local Lua-cURL --server=https://luarocks.org/dev
-luarocks install --local luacov-coveralls --server=https://luarocks.org/dev
-luarocks install --local lunitx
+echo "Installing required rocks for testing"
+luarocks --local install Lua-cURL --server=https://luarocks.org/dev
+luarocks --local show Lua-cURL
+luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
+luarocks --local show luacov-coveralls
+luarocks --local install lunitx
+luarocks --local show lunitx
 echo "Running tests"
 eval "$(luarocks path)"
 cd $PROJECT_HOME
