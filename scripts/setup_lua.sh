@@ -13,11 +13,10 @@ L_RK=${LUAROCKS:-}
 if [[ -z $L_RK ]]; then
   L_RK=3.0.0
 fi
-
+echo "Decoded environment Lua $L_LU and Lua rocks $L_RK"
 source $PROJECT_HOME/scripts/platform.sh
 LUA_HOME_DIR=$T_BD/install/lua
 LR_HOME_DIR=$T_BD/install/luarocks
-
 echo "Ensuring build directory in $T_BD"
 mkdir -p $T_BD
 if [[ ! -d $T_BD ]];then
@@ -46,15 +45,16 @@ if [[ ! -d $T_BD/$LUASRC_BASE ]]; then
     curl --location $LUASRC_PKG -o $T_BD/$LUASRC_BAS
     tar xzf $LUASRC_BAS
   fi
-  cd lua-$LUASRC_BASE
+  cd $T_BD/lua-$LUASRC_BASE
   # Build Lua without backwards compatibility for testing
-  perl -i -pe 's/-DLUA_COMPAT_(ALL|5_2)//' src/Makefile
-  make $PLATFORM && make INSTALL_TOP="$LUA_HOME_DIR" install;
-  if [[ ! -f $HOME/.lua/lua ]];then
+  if [[ ! -f $HOME/.lua/lua ]]; then
+    perl -i -pe 's/-DLUA_COMPAT_(ALL|5_2)//' src/Makefile
+    make $PLATFORM && make INSTALL_TOP="$LUA_HOME_DIR" install;
+    rm -f $HOME/.lua/lua
     ln -sf $LUA_HOME_DIR/bin/lua $HOME/.lua/lua
+    rm -f $HOME/.lua/luac
+    ln -sf $LUA_HOME_DIR/bin/luac $HOME/.lua/luac
   fi
-  rm -f $HOME/.lua/luac
-  ln -sf $LUA_HOME_DIR/bin/luac $HOME/.lua/luac
 fi
 # Luarocks
 LUARKSRC_BAS=luarocks-$L_RK.tar.gz
@@ -62,16 +62,19 @@ LUARKSRC_PKG="http://luarocks.github.io/luarocks/releases/$LUARKSRC_BAS"
 echo "Ensuring lua $LUARKSRC_BAS from $LUARKSRC_PKG in $T_BD/$LUARKSRC_BAS"
 if [[ ! -d $T_BD/$LUARKSRC_BAS ]]; then
   cd $T_BD
-  if [[ ! -f $T_BD/$LUASRC_BAS ]]; then
+  if [[ ! -f $T_BD/$LUARKSRC_BAS ]]; then
     curl --location $LUARKSRC_PKG -o $T_BD/$LUARKSRC_BAS
-    tar xzf $LUARKSRC_BAS
+    tar zxvf $LUARKSRC_BAS
   fi
-  cd luarocks-$L_RK
-  ./configure --with-lua="$LUA_HOME_DIR" --prefix="$LR_HOME_DIR"
-  make build && make install
-  rm -f $HOME/.lua/luarocks
-  ln -sf $LR_HOME_DIR/bin/luarocks $HOME/.lua/luarocks
+  if [[ ! -f $HOME/.lua/luarocks ]]; then
+    cd $T_BD/luarocks-$L_RK
+    ./configure --with-lua="$LUA_HOME_DIR" --prefix="$LR_HOME_DIR"
+    make build && make install
+    rm -f $HOME/.lua/luarocks
+    ln -sf $LR_HOME_DIR/bin/luarocks $HOME/.lua/luarocks
+  fi
 fi
+cd $T_BD
 # Lua deps
 PATH=$HOME/.lua/bin:$HOME/.luarocks/bin:$PATH
 echo "Path altered - checking lua and luarocks PATH=$PATH"
