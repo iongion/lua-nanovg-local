@@ -94,7 +94,9 @@ luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
 luarocks --local show luacov-coveralls
 luarocks --local install lunitx
 luarocks --local show lunitx
+cd $PROJECT_HOME
+echo "Build project"
+make -f Makefile
 echo "Running tests"
 eval "$(luarocks path)"
-cd $PROJECT_HOME
 lunit.sh -i $HOME/.lua/lua $PROJECT_HOME/test/test.lua
