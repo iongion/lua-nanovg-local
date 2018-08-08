@@ -5,7 +5,7 @@ sudo: false
 env:
   global:
     - LUAROCKS=3.0.0
-    - LUA=lua5.3
+    - LUA=5.3
 branches:
   only:
     - master
