@@ -38,8 +38,21 @@ echo "Path altered - checking lua and luarocks PATH=$PATH"
     echo "Running tests"
 if [[ "${machine}" == "Linux" ]]; then
     echo "Starting X virtual framebuffer server"
-    Xvfb :99 -screen 0 1600x1200x16 &
-    export DISPLAY=:99
+    sudo Xvfb :100 -screen 0 1600x1200x16 &
+    export DISPLAY=:100
+    # Wait for Xvfb
+    MAX_ATTEMPTS=120
+    COUNT=0
+    echo -n "Waiting for Xvfb to be ready..."
+    while ! xdpyinfo -display $DISPLAY >/dev/null 2>&1; do
+        echo -n "."
+        sleep 0.50s
+        COUNT=$(( COUNT + 1 ))
+        if [ "${COUNT}" -ge "${MAX_ATTEMPTS}" ]; then
+            echo "  Gave up waiting for X server on $DISPLAY"
+            exit 1
+        fi
+    done
 fi
 eval "$(luarocks path)"
 lunit.sh -i $HOME/.lua/lua $PROJECT_HOME/test/test.lua
