@@ -24,7 +24,7 @@ endif
 
 # CI
 ifdef CI
-	PREFIX?=../$(current_dir)/build/install/lua-nanovg
+	PREFIX?=$(PROJECT_HOME)/build/install/lua-nanovg
 	INCDIR=-I$(PROJECT_HOME)/build/install/lua/include
 else
 	# Linux
