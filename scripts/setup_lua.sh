@@ -77,11 +77,15 @@ if [[ ! -d $T_BD/$LUARKSRC_BAS ]]; then
 fi
 cd $T_BD
 # Lua deps
-PATH=$HOME/.lua/bin:$HOME/.luarocks/bin:$PATH
+PATH=$HOME/.lua:$HOME/.luarocks/bin:$PATH
 echo "Path altered - checking lua and luarocks PATH=$PATH"
+echo "Listing lua programs"
 ls -l $HOME/.lua
+echo "Listing lua rocks"
 ls -l $HOME/.luarocks
+echo "Checking lua interpreter version"
 lua -v
+echo "Checking lua rocks version"
 luarocks --version
 echo "Installing required rocks for testing"
 luarocks --local install Lua-cURL --server=https://luarocks.org/dev
