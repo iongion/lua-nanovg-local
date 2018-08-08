@@ -1,5 +1,7 @@
 language: c
 sudo: false
+git:
+  submodules: true
 env:
   global:
     - LUAROCKS=3.0.0
@@ -7,6 +9,9 @@ env:
 branches:
   only:
     - master
+before_install:
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
 script:
   - bash ./scripts/run-tests.sh
 after_success:
