@@ -39,7 +39,7 @@ else
 		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
-	# OSX - Homebrew
+	# OSX - Homebrew(pkg-config must exist)
 	ifdef OSX
 		PREFIX?=/usr/local
 		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))

@@ -83,26 +83,11 @@ lua -v
 echo "Checking lua rocks version"
 luarocks --version
 echo "Installing rock: Lua-cURL"
-luarocks --local show Lua-cURL > /dev/null 2>&1
-if [[ $? -ne 0 ]]; then
-  luarocks --local install Lua-cURL --server=https://luarocks.org/dev
-else
-  echo "Installed"
-fi
+luarocks --local install Lua-cURL --server=https://luarocks.org/dev
 echo "Installing rock: luacov-coveralls"
-luarocks --local show luacov-coveralls > /dev/null 2>&1
-if [[ $? -ne 0 ]]; then
-  luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
-else
-  echo "Installed"
-fi
+luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
 echo "Installing rock: lunitx"
-luarocks --local show lunitx > /dev/null 2>&1
-if [[ $? -ne 0 ]];then
-  luarocks --local install lunitx
-else
-  echo "Installed"
-fi
+luarocks --local install lunitx
 echo "Dependencies are now installed"
 echo "Lua installation directory: $PROJECT_HOME/build/install/lua"
 ls -l $PROJECT_HOME/build/install/lua
