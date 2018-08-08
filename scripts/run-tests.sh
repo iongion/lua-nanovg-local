@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=OSX;;
+    CYGWIN*)    machine=Windows;;
+    MINGW*)     machine=Windows;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
 function exit_error {
     printf "%s\n" "$*" >&2;
     exit -1;
@@ -27,7 +35,12 @@ if [[ ! -f $MOONGLFW_MAIN ]]; then
 fi
 PATH=$HOME/.lua:$HOME/.luarocks/bin:$PATH
 echo "Path altered - checking lua and luarocks PATH=$PATH"
-echo "Running tests"
+    echo "Running tests"
+if [[ "${machine}" == "Linux" ]]; then
+    echo "Starting X virtual framebuffer server"
+    Xvfb :99 -screen 0 1600x1200x16 &
+    export DISPLAY=:99
+fi
 eval "$(luarocks path)"
 lunit.sh -i $HOME/.lua/lua $PROJECT_HOME/test/test.lua
 echo "Testing finished"
