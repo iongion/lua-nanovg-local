@@ -6,6 +6,8 @@ SYS=$(if $(filter Linux%,$(UNAME)),linux,\
 	    $(if $(filter Darwin%,$(UNAME)),macosx,\
 	        undefined\
 )))
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 ifdef MINGW_PREFIX
 	MINGW=1
@@ -20,22 +22,26 @@ else
 	endif
 endif
 
-# Linux
-ifdef LINUX
-PREFIX?=/usr/local
-INCDIR=`pkg-config --cflags lua5.3`
-endif
-
-# OSX - Homebrew
-ifdef OSX
-PREFIX?=/usr/local
-INCDIR=`pkg-config --cflags lua5.3`
-endif
-
-# Windows - Mingw/Msys
-ifdef MINGW
-PREFIX?=$(MINGW_PREFIX)
-INCDIR=`pkg-config --cflags lua5.3`
+# CI
+ifdef CI
+	PREFIX?=../$(current_dir)/build/install/lua-nanovg
+	INCDIR=-I$(PROJECT_HOME)/build/install/lua/include
+else
+	# Linux
+	ifdef LINUX
+		PREFIX?=/usr/local
+		INCDIR=`pkg-config --cflags lua5.3`
+	endif
+	# OSX - Homebrew
+	ifdef OSX
+		PREFIX?=/usr/local
+		INCDIR=`pkg-config --cflags lua5.3`
+	endif
+	# Windows - Mingw/Msys
+	ifdef MINGW
+		PREFIX?=$(MINGW_PREFIX)
+		INCDIR=`pkg-config --cflags lua5.3`
+	endif
 endif
 
 # Directory where to install Lua modules
@@ -66,8 +72,8 @@ clean :
 
 moonglfw :
 	@echo "Building moonglfw dependency in $(PREFIX)"
-	@cd moonglfw && INCDIR=`pkg-config --cflags lua5.3` $(MAKE) clean && cd .
-	@cd moonglfw && INCDIR=`pkg-config --cflags lua5.3` $(MAKE) && cd .
+	@cd moonglfw && INCDIR=$(INCDIR) $(MAKE) clean && cd .
+	@cd moonglfw && INCDIR=$(INCDIR) $(MAKE) && cd .
 	@cp moonglfw/src/moonglfw.$(L_EXT) moonglfw.$(L_EXT)
 
 install :

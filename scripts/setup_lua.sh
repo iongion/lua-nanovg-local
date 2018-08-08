@@ -89,14 +89,14 @@ echo "Checking lua rocks version"
 luarocks --version
 echo "Installing required rocks for testing"
 luarocks --local install Lua-cURL --server=https://luarocks.org/dev
-luarocks --local show Lua-cURL
+#luarocks --local show Lua-cURL
 luarocks --local install luacov-coveralls --server=https://luarocks.org/dev
-luarocks --local show luacov-coveralls
+#luarocks --local show luacov-coveralls
 luarocks --local install lunitx
-luarocks --local show lunitx
+#luarocks --local show lunitx
 cd $PROJECT_HOME
 echo "Build project"
-make -f Makefile
+CI=true PROJECT_HOME=$PROJECT_HOME make -f Makefile
 echo "Running tests"
 eval "$(luarocks path)"
 lunit.sh -i $HOME/.lua/lua $PROJECT_HOME/test/test.lua
