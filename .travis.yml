@@ -13,6 +13,7 @@ before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
 script:
+  - bash ./scripts/setup_lua.sh
   - bash ./scripts/run-tests.sh
 after_success:
   - coveralls -b .. -r .. -i ./src --dump c.report.json
