@@ -50,6 +50,7 @@ fi
 cd $T_BD/lua-$LUASRC_BASE
 # Build Lua without backwards compatibility for testing
 perl -i -pe 's/-DLUA_COMPAT_(ALL|5_2)//' src/Makefile
+make $PLATFORM clean
 make $PLATFORM MYCFLAGS=-fPIC && make INSTALL_TOP="$LUA_HOME_DIR" install;
 rm -f $HOME/.lua/lua
 ln -sf $LUA_HOME_DIR/bin/lua $HOME/.lua/lua
