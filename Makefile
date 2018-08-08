@@ -90,7 +90,7 @@ test :
 	lua$(LUAVER) examples/test.lua
 
 mingw : OS := MINGW
-mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -Iglfw/include $(shell pkg-config --cflags lua$(LUAVER)) -fPIC
+mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -Iglfw/include -fPIC
 mingw : LDFLAGS += -lm -lopengl32 -lgdi32
 mingw :
 	# NanoVG
@@ -99,7 +99,7 @@ mingw :
 	gcc -shared -O3 $(CFLAGS) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
 
 linux : OS := LINUX
-linux : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_X11 -D_GLFW_BUILD_ALL -Iglfw/include $(shell pkg-config --cflags lua$(LUAVER)) -fPIC
+linux : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_X11 -D_GLFW_BUILD_ALL -Iglfw/include -fPIC
 linux :
 	# NanoVG
 	gcc -c -O3 $(CFLAGS) nanovg/src/nanovg.c
