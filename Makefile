@@ -2,9 +2,9 @@ LUAVER?=5.3
 L_EXT?=so
 UNAME=$(shell uname)
 SYS=$(if $(filter Linux%,$(UNAME)),linux,\
-	    $(if $(filter MINGW%,$(UNAME)),mingw,\
-	    $(if $(filter Darwin%,$(UNAME)),macosx,\
-	        undefined\
+	$(if $(filter MINGW%,$(UNAME)),mingw,\
+	$(if $(filter Darwin%,$(UNAME)),macosx,\
+	undefined\
 )))
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
@@ -22,25 +22,30 @@ else
 	endif
 endif
 
+
 # CI
 ifdef CI
 	PREFIX?=$(PROJECT_HOME)/build/install/lua-nanovg
 	INCDIR=-I$(PROJECT_HOME)/build/install/lua/include
+	LDFLAGS?=-L$(PROJECT_HOME)/build/install/lua/lib -llua
 else
 	# Linux
 	ifdef LINUX
 		PREFIX?=/usr/local
-		INCDIR=`pkg-config --cflags lua5.3`
-	endif
-	# OSX - Homebrew
-	ifdef OSX
-		PREFIX?=/usr/local
-		INCDIR=`pkg-config --cflags lua5.3`
+		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER))
+		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 	# Windows - Mingw/Msys
 	ifdef MINGW
 		PREFIX?=$(MINGW_PREFIX)
-		INCDIR=`pkg-config --cflags lua5.3`
+		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER))
+		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
+	endif
+	# OSX - Homebrew
+	ifdef OSX
+		PREFIX?=/usr/local
+		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER))
+		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 endif
 
@@ -88,7 +93,7 @@ test :
 
 mingw : OS := MINGW
 mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -Iglfw/include $(shell pkg-config --cflags lua$(LUAVER)) -fPIC
-mingw : LDFLAGS += $(shell pkg-config --libs lua$(LUAVER)) -lm -lopengl32 -lgdi32
+mingw : LDFLAGS += -lm -lopengl32 -lgdi32
 mingw :
 	# NanoVG
 	gcc -c -O3 $(CFLAGS) nanovg/src/nanovg.c
@@ -97,7 +102,6 @@ mingw :
 
 linux : OS := LINUX
 linux : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_X11 -D_GLFW_BUILD_ALL -Iglfw/include $(shell pkg-config --cflags lua$(LUAVER)) -fPIC
-linux : LDFLAGS += $(shell pkg-config --libs lua$(LUAVER))
 linux :
 	# NanoVG
 	gcc -c -O3 $(CFLAGS) nanovg/src/nanovg.c
