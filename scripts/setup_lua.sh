@@ -4,6 +4,8 @@ PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 T_BD=${TRAVIS_BUILD_DIR:-}
 if [[ -z $T_BD ]]; then
   T_BD=$PROJECT_HOME/build
+else
+  T_BD=$TRAVIS_BUILD_DIR/build
 fi
 L_LU=${LUA:-}
 if [[ -z $L_LU ]]; then
@@ -94,8 +96,8 @@ if [[ $? -ne 0 ]]; then
 else
   echo "Installed"
 fi
-luarocks --local show lunitx > /dev/null 2>&1
 echo "Installing rock: lunitx"
+luarocks --local show lunitx > /dev/null 2>&1
 if [[ $? -ne 0 ]];then
   luarocks --local install lunitx
 else
