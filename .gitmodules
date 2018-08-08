@@ -1,0 +1,9 @@
+[submodule "nanovg"]
+	path = nanovg
+	url = https://github.com/memononen/nanovg
+[submodule "moonglfw"]
+	path = moonglfw
+	url = https://github.com/stetre/moonglfw.git
+[submodule "nanosvg"]
+	path = nanosvg
+	url = https://github.com/memononen/nanosvg.git
