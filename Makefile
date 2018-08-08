@@ -11,7 +11,7 @@ ifdef MINGW_PREFIX
 	MINGW=1
 	L_EXT=dll
 else
-	UNAME_S := $(shell uname -s)
+	UNAME_S:=$(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
 		LINUX=1
 	endif
@@ -20,29 +20,29 @@ else
 	endif
 endif
 
-
+INCDIR+=-Iglfw/include
 # CI
 ifdef CI
 	PREFIX?=$(PROJECT_HOME)/build/install/lua-nanovg
-	INCDIR?=-I$(PROJECT_HOME)/build/install/lua/include -Iglfw/include
+	INCDIR+=-I$(PROJECT_HOME)/build/install/lua/include
 	LDFLAGS?=-L$(PROJECT_HOME)/build/install/lua/lib -llua
 else
 	# Linux
 	ifdef LINUX
 		PREFIX?=/usr/local
-		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER)) -Iglfw/include
+		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 	# Windows - Mingw/Msys
 	ifdef MINGW
 		PREFIX?=$(MINGW_PREFIX)
-		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER)) -Iglfw/include
+		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 	# OSX - Homebrew
 	ifdef OSX
 		PREFIX?=/usr/local
-		INCDIR?=$(shell pkg-config --cflags lua$(LUAVER)) -Iglfw/include
+		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
 		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
 	endif
 endif
@@ -74,14 +74,14 @@ clean :
 	@cd moonglfw && $(MAKE) clean
 
 moonglfw :
-	@echo "Building moonglfw dependency in $(PREFIX)"
-	@cd moonglfw && INCDIR=$(INCDIR) $(MAKE) clean && cd .
-	@cd moonglfw && INCDIR=$(INCDIR) $(MAKE) && cd .
+	@echo "Building moonglfw dependency in $(PREFIX) $(INCDIR)"
+	@cd moonglfw && INCDIR="$(INCDIR)" $(MAKE) clean && cd .
+	@cd moonglfw && INCDIR="$(INCDIR)" $(MAKE) && cd .
 	@cp moonglfw/src/moonglfw.$(L_EXT) moonglfw.$(L_EXT)
 
 install :
 	@echo "Installing moonglfw dependency in $(PREFIX)"
-	@cd moonglfw && PREFIX=$(PREFIX) $(MAKE) -f Makefile install && cd .
+	@cd moonglfw && PREFIX="$(PREFIX)" $(MAKE) -f Makefile install && cd .
 	@echo "Installing nvg dependency in $(C_DIR)"
 	@cp -f nvg.$(L_EXT) $(C_DIR)
 
