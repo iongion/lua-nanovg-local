@@ -94,22 +94,22 @@ mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WG
 mingw : LDFLAGS += -lm -lopengl32 -lgdi32
 mingw :
 	# NanoVG
-	gcc -c -O3 $(CFLAGS) nanovg/src/nanovg.c
+	gcc -c -O3 $(CFLAGS) $(INCDIR) nanovg/src/nanovg.c
 	ar rcs libnanovg.a *.o
-	gcc -shared -O3 $(CFLAGS) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
+	gcc -shared -O3 $(CFLAGS) $(INCDIR) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
 
 linux : OS := LINUX
 linux : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_X11 -D_GLFW_BUILD_ALL -Iglfw/include -fPIC
 linux :
 	# NanoVG
-	gcc -c -O3 $(CFLAGS) nanovg/src/nanovg.c
+	gcc -c -O3 $(CFLAGS) $(INCDIR) nanovg/src/nanovg.c
 	ar rcs libnanovg.a *.o
-	gcc -shared -O3 $(CFLAGS) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
+	gcc -shared -O3 $(CFLAGS) $(INCDIR) -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a $(LDFLAGS)
 
 macosx : OS := MACOSX
 macosx : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_COCOA -D_GLFW_BUILD_ALL -D_GLFW_NSGL -Iglfw/include
 macosx :
 	# NanoVG
-	gcc -c -O3 nanovg/src/nanovg.c
+	gcc -c -O3 $(CFLAGS) $(INCDIR) nanovg/src/nanovg.c
 	ar rcs libnanovg.a *.o
 	gcc  -O3 -bundle -undefined dynamic_lookup -o nvg.$(L_EXT) lua-nanovg.c libnanovg.a
