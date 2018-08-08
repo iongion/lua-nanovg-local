@@ -6,6 +6,7 @@ SYS=$(if $(filter Linux%,$(UNAME)),linux,\
 	$(if $(filter Darwin%,$(UNAME)),macosx,\
 	undefined\
 )))
+PATH+="$(HOME)/.lua:$(HOME)/.luarocks/bin"
 
 ifdef MINGW_PREFIX
 	MINGW=1
@@ -86,8 +87,7 @@ install :
 	@cp -f nvg.$(L_EXT) $(C_DIR)
 
 test :
-	# Test
-	lua$(LUAVER) examples/test.lua
+	@bash ./scripts/run-tests.sh
 
 mingw : OS := MINGW
 mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -fPIC
