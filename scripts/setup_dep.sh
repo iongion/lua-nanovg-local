@@ -28,7 +28,7 @@ if [[ "${machine}" == "Linux" ]]; then
         liblua5.3-0 \
         liblua5.3-dev \
         luarocks
-    sudo easy_install pip
+    # sudo easy_install pip
 fi
 
 # Homebrew
@@ -36,14 +36,14 @@ if [[ "${machine}" == "OSX" ]]; then
     brew install glfw
 fi
 
-if [[ "${machine}" == "Windowsx" ]]; then
+if [[ "${machine}" == "Windows" ]]; then
     pacman -S --noconfirm mingw-w64-x86_64-glfw \
         mingw64/mingw-w64-x86_64-glew \
         mingw64/mingw-w64-x86_64-mesa \
         mingw64/mingw-w64-x86_64-asciidoctor \
         mingw64/mingw-w64-x86_64-lua \
-        mingw64/mingw-w64-x86_64-lua51-luarocks \
-        mingw64/mingw-w64-x86_64-python2-pip
+        mingw64/mingw-w64-x86_64-lua51-luarocks
+    # mingw64/mingw-w64-x86_64-python2-pip
 fi
 
 # pip install --user hererocks urllib3[secure] cpp-coveralls
