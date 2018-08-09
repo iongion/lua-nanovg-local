@@ -11,6 +11,8 @@ env:
 branches:
   only:
     - master
+cache:
+  apt: true
 before_install:
   - sudo apt-get update && sudo apt-get upgrade -y
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
