@@ -30,6 +30,7 @@ if [[ ! -z "${MY_CI}" ]]; then
     fi
 fi
 # test
+PATH=$HOME/.luarocks/bin:$HOME/.lua:$PATH
 PATH_SCRIPT="$(luarocks path)"
 eval $PATH_SCRIPT
 PATH=$HOME/.luarocks/bin:$HOME/.lua:$PATH
