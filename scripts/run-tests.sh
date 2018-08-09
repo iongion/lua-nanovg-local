@@ -28,5 +28,6 @@ if [[ ! -z "${MY_CI}" ]]; then
     fi
 fi
 # test
-lunit.sh -i `which lua5.3` $PROJECT_HOME/test/test.lua
+echo $PATH
+$HOME/.luarocks/bin/lunit.sh -i `which lua5.3` $PROJECT_HOME/test/test.lua
 echo "Testing finished"
