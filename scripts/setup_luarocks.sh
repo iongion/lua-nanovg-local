@@ -4,7 +4,7 @@ PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
 
-source /tmp/env/bin/activate
+#source /tmp/env/bin/activate
 echo "Ensuring luarocks `which luarocks`"
 
 eval "$(luarocks path)"

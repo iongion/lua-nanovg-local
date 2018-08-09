@@ -44,6 +44,6 @@ if [[ "${machine}" == "Windowsx" ]]; then
         mingw64/mingw-w64-x86_64-python2-pip
 fi
 
-pip install --user hererocks urllib3[secure] cpp-coveralls
-hererocks /tmp/env --lua $L_LU -rlatest
-source /tmp/env/bin/activate
+# pip install --user hererocks urllib3[secure] cpp-coveralls
+# hererocks /tmp/env --lua $L_LU -rlatest
+# source /tmp/env/bin/activate
