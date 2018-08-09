@@ -5,7 +5,6 @@ source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
 
 # source /tmp/env/bin/activate
-eval "$(luarocks path)"
 echo "Running tests `which luarocks` `which lunit.sh`"
 
 # start x
@@ -31,7 +30,10 @@ if [[ ! -z "${MY_CI}" ]]; then
     fi
 fi
 # test
-eval "$(luarocks path)"
+PATH_SCRIPT="$(luarocks path)"
+echo $PATH_SCRIPT
+eval $PATH_SCRIPT
 echo "Testing PATH=$PATH"
-lunit.sh $PROJECT_HOME/test/test.lua
+ls -l $HOME/.luarocks/bin
+$HOME/.luarocks/bin/lunit.sh $PROJECT_HOME/test/test.lua
 echo "Testing finished"
