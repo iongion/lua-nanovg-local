@@ -35,5 +35,5 @@ echo $PATH_SCRIPT
 eval $PATH_SCRIPT
 echo "Testing PATH=$PATH"
 ls -l $HOME/.luarocks/bin
-$HOME/.luarocks/bin/lunit.sh $PROJECT_HOME/test/test.lua
+$HOME/.luarocks/bin/lunit.sh -i lua5.3 $PROJECT_HOME/test/test.lua
 echo "Testing finished"
