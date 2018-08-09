@@ -6,6 +6,7 @@ SYS=$(if $(filter Linux%,$(UNAME)),linux,\
 	$(if $(filter Darwin%,$(UNAME)),macosx,\
 	undefined\
 )))
+PROJECT_HOME:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 PATH+="$(HOME)/.lua:$(HOME)/.luarocks/bin"
 
 ifdef MINGW_PREFIX
@@ -22,31 +23,11 @@ else
 endif
 
 INCDIR+=-Iglfw/include
+
 # CI
-ifdef CI
-	PREFIX?=$(PROJECT_HOME)/build/$(SYS)/install/lua
-	INCDIR+=-I$(PROJECT_HOME)/build/$(SYS)/install/lua/include
-	LDFLAGS?=-L$(PROJECT_HOME)/build/$(SYS)/install/lua/lib -llua
-else
-	# Linux
-	ifdef LINUX
-		PREFIX?=/usr/local
-		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
-		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
-	endif
-	# Windows - Mingw/Msys
-	ifdef MINGW
-		PREFIX?=$(MINGW_PREFIX)
-		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
-		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
-	endif
-	# OSX - Homebrew(pkg-config must exist)
-	ifdef OSX
-		PREFIX?=/usr/local
-		INCDIR+=$(shell pkg-config --cflags lua$(LUAVER))
-		LDFLAGS?=$(shell pkg-config --libs lua$(LUAVER))
-	endif
-endif
+PREFIX?=$(PROJECT_HOME)/build/$(SYS)/install/lua
+INCDIR+=-I$(PROJECT_HOME)/build/$(SYS)/install/lua/include
+LDFLAGS?=-L$(PROJECT_HOME)/build/$(SYS)/install/lua/lib -llua
 
 # Directory where to install Lua modules
 L_DIR=$(PREFIX)/share/lua/$(LUAVER)
@@ -64,7 +45,7 @@ default : all
 all: clean moonglfw $(SYS) doc
 
 doc:
-	@echo "Building documentation"
+	@echo "Building documentation: [$(PROJECT_HOME)]"
 	@cd doc && make
 
 undefined :

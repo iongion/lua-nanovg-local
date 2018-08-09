@@ -14,6 +14,6 @@ if [[ ! -z "${CI}" ]]; then
 fi
 
 echo "Building project starting"
-PREFIX=$T_BD/install/.luarocks make clean
-PREFIX=$T_BD/install/.luarocks make install
+PREFIX=$T_BD/install/.luarocks PROJECT_HOME=$PROJECT_HOME make clean
+PREFIX=$T_BD/install/.luarocks PROJECT_HOME=$PROJECT_HOME make install
 echo "Building project finished"
