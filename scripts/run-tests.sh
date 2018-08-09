@@ -3,11 +3,10 @@ set -e
 PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
-# set env
-eval "$($T_BD/install/luarocks/bin/luarocks path)"
-PATH=$T_BD/install/lua/bin:$T_BD/install/luarocks/bin:$T_BD/install/.luarocks/bin:$PATH
+eval "$(luarocks path)"
+echo "Running tests"
 # start x
-MY_CI="${CI:}"
+MY_CI="${CI:-}"
 if [[ ! -z "${MY_CI}" ]]; then
     if [[ "${machine}" == "Linux" ]]; then
         echo "Starting X virtual framebuffer server"
@@ -29,6 +28,5 @@ if [[ ! -z "${MY_CI}" ]]; then
     fi
 fi
 # test
-echo "Running tests"
 lunit.sh $PROJECT_HOME/test/test.lua
 echo "Testing finished"

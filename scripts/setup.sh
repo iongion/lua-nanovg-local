@@ -35,14 +35,10 @@ if [[ -z $L_RK ]]; then
   L_RK=3.0.0
 fi
 T_BD=$PROJECT_HOME/build/$PLATFORM
-LUA_HOME_DIR=$T_BD/install/lua
-LR_HOME_DIR=$T_BD/install/luarocks
 
 echo "Setting up runtime configuration"
 echo "Detected PLATFORM=$PLATFORM machine=$machine extension=$L_EXT lua=$L_LU luarocks=$L_RK"
 echo "Building in $T_BD"
-echo "Using lua from $LUA_HOME_DIR"
-echo "Using luarocks from $LR_HOME_DIR"
 echo "Ensuring build directory in $T_BD"
 mkdir -p $T_BD
 if [[ ! -d $T_BD ]];then

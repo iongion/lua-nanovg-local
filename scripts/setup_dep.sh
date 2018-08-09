@@ -23,7 +23,10 @@ if [[ "${machine}" == "Linux" ]]; then
         libreadline-dev \
         unzip \
         curl \
-        libcurl3-gnutls-dev
+        libcurl3-gnutls-dev \
+        liblua5.3 \
+        liblua5.3-dev \
+        luarocks
 fi
 
 # Homebrew
@@ -35,5 +38,7 @@ if [[ "${machine}" == "Windows" ]]; then
     pacman -S --noconfirm mingw-w64-x86_64-glfw \
         mingw64/mingw-w64-x86_64-glew \
         mingw64/mingw-w64-x86_64-mesa \
-        mingw64/mingw-w64-x86_64-asciidoctor
+        mingw64/mingw-w64-x86_64-asciidoctor \
+        mingw64/mingw-w64-x86_64-lua \
+        mingw64/mingw-w64-x86_64-lua51-luarocks
 fi

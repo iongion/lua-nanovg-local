@@ -3,17 +3,8 @@ set -e
 PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
-
-if [[ -f $T_BD/install/lua/bin ]]; then
-    eval "$($T_BD/install/luarocks/bin/luarocks path)"
-    PATH=$T_BD/install/lua/bin:$T_BD/install/luarocks/bin:$T_BD/install/.luarocks/bin:$PATH
-fi
-
-if [[ ! -z "${CI}" ]]; then
-    CI=true
-fi
-
+eval "$(luarocks path)"
 echo "Building project starting"
-PREFIX=$T_BD/install/.luarocks PROJECT_HOME=$PROJECT_HOME make clean
-PREFIX=$T_BD/install/.luarocks PROJECT_HOME=$PROJECT_HOME make install
+PROJECT_HOME=$PROJECT_HOME make clean
+PROJECT_HOME=$PROJECT_HOME make install
 echo "Building project finished"

@@ -25,9 +25,9 @@ endif
 INCDIR+=-Iglfw/include
 
 # CI
-PREFIX?=$(PROJECT_HOME)/build/$(SYS)/install/lua
-INCDIR+=-I$(PROJECT_HOME)/build/$(SYS)/install/lua/include
-LDFLAGS?=-L$(PROJECT_HOME)/build/$(SYS)/install/lua/lib -llua
+PREFIX?=/usr/local
+INCDIR+=$(shell pkg-config --cflags lua5.3)
+LDFLAGS?=$(shell pkg-config --libs lua5.3)
 
 # Directory where to install Lua modules
 L_DIR=$(PREFIX)/share/lua/$(LUAVER)
@@ -37,6 +37,8 @@ C_DIR=$(PREFIX)/lib/lua/$(LUAVER)
 H_DIR=$(PREFIX)/include
 # Directory where to install C libraries
 S_DIR=$(PREFIX)/lib
+
+P_DIR=$(HOME)/.luarocks/lib/lua/$(LUAVER)
 
 default : all
 
@@ -67,10 +69,10 @@ moonglfw :
 	@cp moonglfw/src/moonglfw.$(L_EXT) moonglfw.$(L_EXT)
 
 install : moonglfw $(SYS)
-	@echo "Installing moonglfw dependency in $(PREFIX)"
-	@cd moonglfw && PREFIX="$(PREFIX)" $(MAKE) -f Makefile install && cd .
-	@echo "Installing nvg dependency in $(C_DIR)"
-	@cp -f nvg.$(L_EXT) $(C_DIR)
+	@echo "Installing moonglfw dependency in $(P_DIR)"
+	@cp -f moonglfw.$(L_EXT) $(P_DIR)
+	@echo "Installing nvg dependency in $(P_DIR)"
+	@cp -f nvg.$(L_EXT) $(P_DIR)
 
 test :
 	@bash ./scripts/run-tests.sh
