@@ -3,8 +3,7 @@ set -e
 PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
-eval "$(luarocks path)"
-echo "Running tests"
+
 # start x
 MY_CI="${CI:-}"
 if [[ ! -z "${MY_CI}" ]]; then
@@ -28,5 +27,9 @@ if [[ ! -z "${MY_CI}" ]]; then
     fi
 fi
 # test
+echo "Running tests"
+eval "$(luarocks path)"
+echo $PATH
+ls -l $HOME/.luarocks/bin
 lunit.sh $PROJECT_HOME/test/test.lua
 echo "Testing finished"
