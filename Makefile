@@ -59,16 +59,21 @@ S_DIR=$(PREFIX)/lib
 
 default : all
 
-.PHONY: moonglfw test
+.PHONY: all clean moonglfw install test mingw linux macosx undefined doc
 
 all: clean moonglfw $(SYS) doc
+
+doc:
+	@echo "Building documentation"
+	@cd doc && make
 
 undefined :
 	@echo "I can't guess your platform, please do 'make PLATFORM' where PLATFORM is one of these:"
 	@echo "      linux mingw macosx"
 
 clean :
-	@rm -fr *.$(L_EXT)
+	@rm -fr *.so
+	@rm -fr *.dll
 	@rm -fr *.a
 	@rm -fr *.o
 	@echo "Cleaned build files"
@@ -80,7 +85,7 @@ moonglfw :
 	@cd moonglfw && INCDIR="$(INCDIR)" $(MAKE) && cd .
 	@cp moonglfw/src/moonglfw.$(L_EXT) moonglfw.$(L_EXT)
 
-install :
+install : moonglfw $(SYS)
 	@echo "Installing moonglfw dependency in $(PREFIX)"
 	@cd moonglfw && PREFIX="$(PREFIX)" $(MAKE) -f Makefile install && cd .
 	@echo "Installing nvg dependency in $(C_DIR)"
