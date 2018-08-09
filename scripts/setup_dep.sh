@@ -23,7 +23,9 @@ if [[ "${machine}" == "Linux" ]]; then
         unzip \
         curl \
         libcurl3-gnutls-dev \
+        lua5.3 \
         liblua5.3 \
+        liblua5.3-0 \
         liblua5.3-dev \
         luarocks
     sudo easy_install pip
