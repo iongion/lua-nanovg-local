@@ -31,9 +31,7 @@ if [[ ! -z "${MY_CI}" ]]; then
 fi
 # test
 PATH_SCRIPT="$(luarocks path)"
-echo $PATH_SCRIPT
 eval $PATH_SCRIPT
-echo "Testing PATH=$PATH"
-ls -l $HOME/.luarocks/bin
-$HOME/.luarocks/bin/lunit.sh -i lua5.3 $PROJECT_HOME/test/test.lua
+PATH=$HOME/.luarocks/bin:$HOME/.lua:$PATH
+lunit.sh -i lua5.3 $PROJECT_HOME/test/test.lua
 echo "Testing finished"
