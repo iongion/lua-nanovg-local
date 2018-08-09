@@ -24,9 +24,9 @@ endif
 INCDIR+=-Iglfw/include
 # CI
 ifdef CI
-	PREFIX?=$(PROJECT_HOME)/build/install/$(SYS)/lua-nanovg
-	INCDIR+=-I$(PROJECT_HOME)/build/install/$(SYS)/lua/include
-	LDFLAGS?=-L$(PROJECT_HOME)/build/install/$(SYS)/lua/lib -llua
+	PREFIX?=$(PROJECT_HOME)/build/$(SYS)/install/lua-nanovg
+	INCDIR+=-I$(PROJECT_HOME)/build/$(SYS)/install/lua/include
+	LDFLAGS?=-L$(PROJECT_HOME)/build/$(SYS)/install/lua/lib -llua
 else
 	# Linux
 	ifdef LINUX
