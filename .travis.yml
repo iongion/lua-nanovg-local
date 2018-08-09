@@ -12,6 +12,7 @@ branches:
   only:
     - master
 before_install:
+  - sudo apt-get update && sudo apt-get upgrade -y
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
 script:

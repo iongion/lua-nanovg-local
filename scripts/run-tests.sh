@@ -3,7 +3,11 @@ set -e
 PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
-echo "Running tests"
+
+source /tmp/env/bin/activate
+eval "$(luarocks path)"
+echo "Running tests `which luarocks` `which lunit.sh`"
+
 # start x
 MY_CI="${CI:-}"
 if [[ ! -z "${MY_CI}" ]]; then
@@ -29,5 +33,5 @@ fi
 # test
 eval "$(luarocks path)"
 echo "Testing PATH=$PATH"
-$HOME/.luarocks/bin/lunit.sh -i `which lua5.3` $PROJECT_HOME/test/test.lua
+lunit.sh $PROJECT_HOME/test/test.lua
 echo "Testing finished"

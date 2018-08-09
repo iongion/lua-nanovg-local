@@ -7,7 +7,6 @@ cd $PROJECT_HOME
 echo "Resolving dependencies"
 
 if [[ "${machine}" == "Linux" ]]; then
-    sudo apt-get update && sudo apt-get upgrade -y
     sudo apt-get install -y \
         asciidoctor \
         ruby-pygments.rb \
@@ -27,6 +26,7 @@ if [[ "${machine}" == "Linux" ]]; then
         liblua5.3 \
         liblua5.3-dev \
         luarocks
+    sudo easy_install pip
 fi
 
 # Homebrew
@@ -34,11 +34,16 @@ if [[ "${machine}" == "OSX" ]]; then
     brew install glfw
 fi
 
-if [[ "${machine}" == "Windows" ]]; then
+if [[ "${machine}" == "Windowsx" ]]; then
     pacman -S --noconfirm mingw-w64-x86_64-glfw \
         mingw64/mingw-w64-x86_64-glew \
         mingw64/mingw-w64-x86_64-mesa \
         mingw64/mingw-w64-x86_64-asciidoctor \
         mingw64/mingw-w64-x86_64-lua \
-        mingw64/mingw-w64-x86_64-lua51-luarocks
+        mingw64/mingw-w64-x86_64-lua51-luarocks \
+        mingw64/mingw-w64-x86_64-python2-pip
 fi
+
+pip install --user hererocks urllib3[secure] cpp-coveralls
+hererocks /tmp/env --lua $L_LU -rlatest
+source /tmp/env/bin/activate

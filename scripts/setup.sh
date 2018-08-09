@@ -1,5 +1,6 @@
 set -e
 PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
+export PATH=$HOME/.local/bin:$PATH
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -30,14 +31,11 @@ L_LU=${LUA:-}
 if [[ -z $L_LU ]]; then
   L_LU=5.3
 fi
-L_RK=${LUAROCKS:-}
-if [[ -z $L_RK ]]; then
-  L_RK=3.0.0
-fi
+
 T_BD=$PROJECT_HOME/build/$PLATFORM
 
 echo "Setting up runtime configuration"
-echo "Detected PLATFORM=$PLATFORM machine=$machine extension=$L_EXT lua=$L_LU luarocks=$L_RK"
+echo "Detected PLATFORM=$PLATFORM machine=$machine extension=$L_EXT lua=$L_LU"
 echo "Building in $T_BD"
 echo "Ensuring build directory in $T_BD"
 mkdir -p $T_BD

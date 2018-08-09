@@ -4,4 +4,5 @@ PROJECT_HOME=$( dirname "$( cd "$( dirname "$0" )" && pwd )" )
 source $PROJECT_HOME/scripts/setup.sh
 cd $PROJECT_HOME
 
-echo "Ensuring lua $L_LU"
+source /tmp/env/bin/activate
+echo "Ensuring lua `which lua` `lua -v`"
