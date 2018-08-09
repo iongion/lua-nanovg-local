@@ -75,7 +75,7 @@ install : moonglfw $(SYS)
 	@cp -f nvg.$(L_EXT) $(P_DIR)
 
 test :
-	@bash ./scripts/run-tests.sh
+	lunit.sh -i lua5.3 $(PROJECT_HOME)/test/test.lua
 
 mingw : OS := MINGW
 mingw : CFLAGS += -DLUAVER=$(LUAVER) -D_GLFW_USE_OPENGL -D_GLFW_WIN32 -D_GLFW_WGL -D_GLFW_BUILD_ALL -fPIC
