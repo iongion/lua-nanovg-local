@@ -18,11 +18,11 @@ before_install:
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
 script:
-  - ./scripts/setup_dep.sh
-  - ./scripts/setup_lua.sh
-  - ./scripts/setup_luarocks.sh
-  - ./scripts/build.sh
-  - ./scripts/run-tests.sh
+  - scripts/setup_dep.sh
+  - scripts/setup_lua.sh
+  - scripts/setup_luarocks.sh
+  - scripts/build.sh
+  - scripts/run-tests.sh
 after_success:
   - coveralls -b .. -r .. -i ./src --dump c.report.json
   - luacov-coveralls -j c.report.json -v
